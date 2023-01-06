@@ -1,0 +1,35 @@
+<ng-template appPlaceHolder></ng-template>
+<div class="container">
+    <div class="top-nav">
+        <a [ngClass]="{'active': activeTabIndex === 0}" href="#"  (click)="getPostData()">Posts</a>
+        <a [ngClass]="{'active': activeTabIndex === 1}" href="#"   (click)="activeTabIndex=1">Create Post</a>
+    </div>
+    <div id="postList" role="tabpanel" *ngIf="activeTabIndex === 0">
+        <div class="form-group">
+            <label for="search-text">Search Title:</label>
+            <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
+                [(ngModel)]="searchText" placeholder="Enter text to search by title" autofocus>
+        </div>
+        <h2>Posts Data</h2> 
+  
+        <table aria-describedby="posts data list">
+          <thead>
+              <tr>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Details</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let posts of allPostsList$ | async | appSearchFilter : searchText">
+              <td>{{ posts.title}}</td>
+              <td>{{ posts.body }}</td>
+              <td><a href="#" (click)="showPostDetails(posts)">Details</a></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div id="createPost" role="tabpanel" *ngIf="activeTabIndex === 1">
+        <app-create-post></app-create-post>
+    </div>
+</div>

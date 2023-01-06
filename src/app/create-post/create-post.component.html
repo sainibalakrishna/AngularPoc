@@ -1,0 +1,20 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div class="form-group div-padding">
+        <label for="title">Title:</label>
+        <input type="text" class="form-control" #title placeholder="title" formControlName="title">
+        <div class="error" *ngIf="(myForm?.get('title')?.invalid && (myForm?.get('title')?.dirty || myForm?.get('title')?.touched)) && !myForm?.get('title')?.hasError('pattern')">
+            Please provide title.
+        </div>
+        <div class="error" *ngIf="myForm?.get('title')?.hasError('pattern')">
+            Please type start with 'x' character.
+        </div>
+    </div>
+    <div class="form-group div-padding">
+        <label for="bodyText">Body Text:</label>
+        <textarea class="form-control" rows="5" #bodyText formControlName="bodyText"></textarea>
+        <div class="error" *ngIf="myForm?.get('bodyText')?.invalid && (myForm?.get('bodyText')?.dirty || myForm?.get('bodyText')?.touched)">
+            Please provide body.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-margin buttonAlign" [disabled]="myForm?.invalid">Submit</button>
+</form>

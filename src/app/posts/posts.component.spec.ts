@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { PostsComponent } from './posts.component';
 import {
@@ -7,7 +7,7 @@ import {
   PipeTransform
 } from '@angular/core';
 import { IPosts } from '../models/posts.model';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideMockStore } from '@ngrx/store/testing';
 import { State } from '../models/posts.model';
 import * as fromSelector from '../store/posts.selector';
@@ -59,7 +59,8 @@ describe('PostsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ PostsComponent, SearchPipeMock ],
       imports: [
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
       ],
       providers: [
         provideMockStore({
@@ -79,6 +80,7 @@ describe('PostsComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

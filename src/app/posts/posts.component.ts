@@ -7,6 +7,8 @@ import * as fromActions from '../store/posts.action';
 import { PlaceHolderDirective } from '../directives/placeholder.directive';
 import { PostDetailsComponent } from '../post-details/post-details.component';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-posts',
@@ -19,10 +21,14 @@ export class PostsComponent implements OnInit {
   @ViewChild(PlaceHolderDirective) placeHolderDirective: PlaceHolderDirective;
   searchText='';
   closeSub: Subscription;
-  constructor(private store: Store<State>) {}
+  searchTextControl = new FormControl();
+
+  constructor(private store: Store<State>) {
+  }
 
   ngOnInit() {
     this.store.dispatch(fromActions.LoadData({payload: null}));
+    this.searchTextControl.valueChanges.pipe(debounceTime(500)).subscribe(newValue => this.searchText = newValue);
   }
   getPostData() {
     this.activeTabIndex = 0;

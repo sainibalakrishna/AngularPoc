@@ -4,6 +4,7 @@ import { State, IPosts } from '../models/posts.model';
 import * as fromSelector from '../store/posts.selector';
 import * as fromActions from '../store/posts.action';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
@@ -14,7 +15,7 @@ export class CreatePostComponent {
 
   myForm: any;
 
-  constructor(private store: Store<State>, private fb: FormBuilder) {}
+  constructor(private store: Store<State>, private fb: FormBuilder, private router: Router) {}
   
   ngOnInit() {
     this.myForm = this.fb.group({
@@ -35,6 +36,6 @@ export class CreatePostComponent {
         this.myForm.reset();
         alert('post is created successfully...');
       }
-    })
+    });
   }
 }

@@ -5,26 +5,22 @@
         <a [ngClass]="{'active': activeTabIndex === 1}" href="#"   (click)="activeTabIndex=1">Create Post</a>
     </div>
     <div id="postList" role="tabpanel" *ngIf="activeTabIndex === 0">
-        <div class="form-group">
+        <div class="form-group search-text">
             <label for="search-text">Search Title:</label>
-            <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
-                [(ngModel)]="searchText" placeholder="Enter text to search by title" autofocus>
+            <input class="search-text form-control" type="search" [formControl]="searchTextControl" placeholder="Enter text to search by title" autofocus>
         </div>
-        <h2>Posts Data</h2> 
-  
+        <h2>Posts Data</h2>
         <table aria-describedby="posts data list">
           <thead>
               <tr>
                 <th>Title</th>
                 <th>Body</th>
-                <th>Details</th>
               </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let posts of allPostsList$ | async | appSearchFilter : searchText">
-              <td>{{ posts.title}}</td>
-              <td>{{ posts.body }}</td>
-              <td><a href="#" (click)="showPostDetails(posts)">Details</a></td>
+            <tr *ngFor="let posts of allPostsList$ | async | appSearchFilter : searchText" (click)="showPostDetails(posts)" style="cursor: pointer;">
+              <td>{{ posts?.title}}</td>
+              <td>{{ posts?.body }}</td>
             </tr>
           </tbody>
         </table>
